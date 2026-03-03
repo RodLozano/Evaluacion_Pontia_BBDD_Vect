@@ -1,0 +1,26 @@
+# LLM y RAG
+langchain
+langchain-anthropic
+langchain-openai
+anthropic
+openai
+
+# Base de datos vectorial
+weaviate-client
+
+# Reranking
+sentence-transformers
+
+# Ingesta y scheduling
+apscheduler
+requests
+feedparser
+yfinance
+
+# API
+fastapi
+uvicorn
+
+# Utils
+python-dotenv
+pydantic
