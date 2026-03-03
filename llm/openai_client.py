@@ -1,8 +1,8 @@
-from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from config import (
-    ANTHROPIC_API_KEY,
+    OPENAI_API_KEY,
     LLM_MODEL,
     LLM_TEMPERATURE,
     LLM_MAX_TOKENS,
@@ -15,12 +15,11 @@ from retrieval.context_builder import build_context, build_sources
 from vectordb.weaviate_client import get_client
 
 
-# Inicializar el modelo una sola vez
-llm = ChatAnthropic(
+llm = ChatOpenAI(
     model=LLM_MODEL,
     temperature=LLM_TEMPERATURE,
     max_tokens=LLM_MAX_TOKENS,
-    anthropic_api_key=ANTHROPIC_API_KEY,
+    openai_api_key=OPENAI_API_KEY,
 )
 
 
@@ -29,12 +28,7 @@ def answer_question(
     time_range_hours: int = 24,
 ) -> dict:
     """
-    Flujo completo del sistema RAG:
-    1. Query expansion + detección de tickers
-    2. Retrieval híbrido en Weaviate
-    3. Reranking + MMR
-    4. Construcción del contexto
-    5. Generación de respuesta con Claude
+    Flujo completo del sistema RAG con GPT-4o.
     """
 
     # ── 1. Query expansion ────────────────────────────────
@@ -67,7 +61,7 @@ def answer_question(
     context = build_context(final_docs, market_data)
     sources = build_sources(final_docs)
 
-    # ── 5. Generación con Claude ──────────────────────────
+    # ── 5. Generación con GPT-4o ──────────────────────────
     user_prompt = build_user_prompt(question, context)
 
     messages = [
@@ -76,12 +70,11 @@ def answer_question(
     ]
 
     response = llm.invoke(messages)
-    answer = response.content
 
     return {
-        "answer":       answer,
-        "sources":      sources,
-        "tickers":      tickers,
-        "market_data":  market_data,
-        "docs_used":    len(final_docs),
+        "answer":      response.content,
+        "sources":     sources,
+        "tickers":     tickers,
+        "market_data": market_data,
+        "docs_used":   len(final_docs),
     }

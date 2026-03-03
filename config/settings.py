@@ -5,7 +5,7 @@ load_dotenv()
 
 # ── API Keys ──────────────────────────────────────────────
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+#ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
 ALPACA_API_KEY = os.getenv("ALPACA_API_KEY")
 ALPACA_SECRET_KEY = os.getenv("ALPACA_SECRET_KEY")
@@ -18,7 +18,7 @@ EMBEDDING_MODEL = "text-embedding-3-large"
 EMBEDDING_DIMENSIONS = 1536
 
 # ── LLM ───────────────────────────────────────────────────
-LLM_MODEL = "claude-sonnet-4-20250514"
+LLM_MODEL = "gpt-4o"
 LLM_TEMPERATURE = 0.2
 LLM_MAX_TOKENS = 1024
 
